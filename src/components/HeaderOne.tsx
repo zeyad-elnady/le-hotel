@@ -231,7 +231,8 @@ const HeaderOne: FC = () => {
           display: "flex",
           flexDirection: "column",
           transform: mobileOpen ? "translateX(0)" : `translateX(${dir === "rtl" ? "100%" : "-100%"})`,
-          transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+          visibility: mobileOpen ? "visible" : "hidden",
+          transition: `transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0s ${mobileOpen ? "0s" : "0.35s"}`,
           overflowY: "auto",
           padding: "32px 28px 48px",
         }}

@@ -1,12 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import AOSWrap from "@/helper/AOSWrap";
 import Preloader from "@/helper/Preloader";
+import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Breadcrumb from "@/components/Breadcrumb";
 import FooterOne from "@/components/FooterOne";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface JobOpening {
   id: string;
@@ -23,14 +28,48 @@ const JobsPage: React.FC = () => {
   const [success, setSuccess] = useState(false);
 
   const openings = translations.jobs.openings;
+  const formRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Parallax animation for the Life at Le Hotel image
+    if (imageRef.current && contentRef.current) {
+      gsap.fromTo(
+        imageRef.current,
+        { y: -50 },
+        {
+          y: 50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: contentRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    }
+  }, []);
 
   const handleApplyClick = (job: JobOpening) => {
     setSelectedJob(job);
     setSuccess(false);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedJob(null);
+    
+    // Scroll down to the form smoothly
+    if (formRef.current) {
+      window.scrollTo({
+        top: formRef.current.offsetTop - 100,
+        behavior: "smooth"
+      });
+      
+      // Give a subtle highlight animation to the form
+      gsap.fromTo(
+        formRef.current,
+        { boxShadow: "0 0 0 rgba(200,160,80,0)" },
+        { boxShadow: "0 0 40px rgba(200,160,80,0.3)", duration: 1, yoyo: true, repeat: 1 }
+      );
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,218 +79,216 @@ const JobsPage: React.FC = () => {
 
   return (
     <AOSWrap>
-      {/* Preloader */}
       <Preloader />
-
-      {/* Breadcrumb */}
+      
+      {/* Breadcrumb gives us the standard page header (the boat image) */}
       <Breadcrumb title={t("nav.jobs")} sub_title={t("jobs.subtitle")} />
 
-      {/* Careers Content */}
-      <section className="bg_2 pt-120 pb-120">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10">
-              <div className="section-two-wrapper text-center tw-mb-14">
-                <h6 className="section-two-subtitle tw-text-xl text-uppercase text-main-three-800 tw-mb-4 font-heading">
-                  {t("jobs.subtitle")}
-                </h6>
-                <h2 className="section-two-title tw-text-16 fw-normal tw-mb-6 font-heading">
-                  {t("jobs.title")}
-                </h2>
-                <p className="tw-text-lg text-neutral-600 tw-mb-0" style={{ lineHeight: "1.8" }}>
-                  {t("jobs.intro")}
-                </p>
-              </div>
+      <div className="bg-white">
+        
+        {/* Section 1: Job Opportunities Grid */}
+        <section className="pt-120 pb-120 border-bottom border-neutral-100">
+          <div className="container">
+            <div className="text-center tw-mb-14">
+              <h6 className="tw-text-xl text-uppercase text-main-600 tw-mb-4 font-heading fw-medium tracking-widest">
+                {t("jobs.subtitle")}
+              </h6>
+              <h2 className="display-5 fw-normal tw-mb-6 font-heading text-heading">
+                {t("jobs.title")}
+              </h2>
+              <p className="tw-text-lg text-neutral-600 max-w-700 mx-auto" style={{ lineHeight: "1.8" }}>
+                {t("jobs.intro")}
+              </p>
+            </div>
 
-              {/* Jobs List */}
-              <div className="d-flex flex-column tw-gap-6">
-                {openings.map((job) => (
-                  <div
-                    key={job.id}
-                    className="bg-white rounded-lg shadow-sm border border-neutral-100 tw-p-8 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center tw-gap-6 transition-all hover-translate-y"
-                    style={{ transition: "all 0.3s ease" }}
-                  >
-                    <div className="flex-grow-1">
-                      <div className="d-flex flex-wrap gap-2 align-items-center tw-mb-3">
-                        <span className="bg-main-600 text-heading tw-py-1 tw-px-3 rounded-pill fw-semibold tw-text-xs uppercase font-heading">
-                          {t(job.department)}
-                        </span>
-                      </div>
-                      <h3 className="tw-text-2xl fw-normal text-heading font-heading tw-mb-3">
-                        {t(job.title)}
-                      </h3>
-                      <p className="text-neutral-500 tw-text-base mb-3 max-w-600" style={{ lineHeight: "1.6" }}>
-                        {t(job.desc)}
-                      </p>
-
-                      {/* Job Metadata Badges */}
-                      <div className="d-flex flex-wrap tw-gap-4">
-                        <div className="d-flex align-items-center gap-1.5 tw-text-sm text-neutral-500 font-heading">
-                          <i className="ph-bold ph-map-pin" />
-                          <span>{t(job.location)}</span>
-                        </div>
-                        <div className="d-flex align-items-center gap-1.5 tw-text-sm text-neutral-500 font-heading">
-                          <i className="ph-bold ph-briefcase" />
-                          <span>{t(job.type)}</span>
-                        </div>
-                      </div>
+            <div className="row g-4 justify-content-center">
+              {openings.map((job) => (
+                <div className="col-lg-4 col-md-6" key={job.id}>
+                  <div className="bg-white rounded-lg shadow-sm border border-neutral-100 p-5 h-100 d-flex flex-column transition-all hover-translate-y hover-shadow-lg group cursor-pointer" onClick={() => handleApplyClick(job)}>
+                    <div className="tw-mb-4 d-flex justify-content-between align-items-center">
+                      <span className="bg-main-50 text-main-600 tw-py-1 tw-px-3 rounded-pill fw-semibold tw-text-xs uppercase font-heading">
+                        {t(job.department)}
+                      </span>
+                      <i className="ph ph-arrow-up-right text-neutral-300 tw-text-2xl transition-all group-hover-text-main-600" />
                     </div>
-
-                    {/* Apply Button */}
-                    <div className="tw-mt-4 tw-md-mt-0 flex-shrink-0 w-100 w-md-auto">
-                      <button
-                        onClick={() => handleApplyClick(job)}
-                        className="btn bg-heading hover-bg-main-600 text-white hover-text-heading tw-py-3.5 tw-px-8 rounded-lg fw-semibold font-heading transition-all border-0 w-100 w-md-auto cursor-pointer"
-                      >
-                        {t("jobs.apply")}
-                      </button>
+                    <h3 className="tw-text-2xl fw-normal text-heading font-heading tw-mb-3">
+                      {t(job.title)}
+                    </h3>
+                    <p className="text-neutral-500 tw-text-sm mb-4 flex-grow-1" style={{ lineHeight: "1.6" }}>
+                      {t(job.desc)}
+                    </p>
+                    <div className="d-flex flex-wrap gap-3 border-top border-neutral-100 pt-4">
+                      <div className="d-flex align-items-center gap-1.5 tw-text-xs text-neutral-500 font-heading fw-medium">
+                        <i className="ph-bold ph-map-pin text-main-600" />
+                        <span>{t(job.location)}</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-1.5 tw-text-xs text-neutral-500 font-heading fw-medium">
+                        <i className="ph-bold ph-briefcase text-main-600" />
+                        <span>{t(job.type)}</span>
+                      </div>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Life at Le Hotel (Content & Photo Animation) */}
+        <section ref={contentRef} className="pt-120 pb-120 bg-neutral-50 overflow-hidden">
+          <div className="container">
+            <div className="row align-items-center gy-5">
+              <div className="col-lg-6">
+                <div className="pe-lg-5">
+                  <h6 className="tw-text-xl text-uppercase text-main-600 tw-mb-4 font-heading fw-medium tracking-widest">
+                    Life at Le Hotel
+                  </h6>
+                  <h2 className="display-5 fw-normal tw-mb-6 font-heading text-heading">
+                    Elevating the Art of Hospitality
+                  </h2>
+                  <p className="tw-text-lg text-neutral-600 tw-mb-6" style={{ lineHeight: "1.8" }}>
+                    Joining our team means becoming part of a legacy of excellence. We believe that true luxury is crafted by passionate individuals who are dedicated to creating unforgettable experiences.
+                  </p>
+                  <p className="tw-text-lg text-neutral-600 tw-mb-8" style={{ lineHeight: "1.8" }}>
+                    We foster a culture of continuous growth, offering unparalleled training, global opportunities, and an environment where your unique talents are celebrated.
+                  </p>
+                  <div className="d-flex gap-4">
+                    <div className="text-center">
+                      <h4 className="tw-text-3xl font-heading fw-bold text-main-600 mb-1">5★</h4>
+                      <span className="tw-text-sm text-neutral-500 uppercase tracking-widest">Environment</span>
+                    </div>
+                    <div className="border-start border-neutral-200"></div>
+                    <div className="text-center">
+                      <h4 className="tw-text-3xl font-heading fw-bold text-main-600 mb-1">12+</h4>
+                      <span className="tw-text-sm text-neutral-500 uppercase tracking-widest">Benefits</span>
+                    </div>
+                    <div className="border-start border-neutral-200"></div>
+                    <div className="text-center">
+                      <h4 className="tw-text-3xl font-heading fw-bold text-main-600 mb-1">100%</h4>
+                      <span className="tw-text-sm text-neutral-500 uppercase tracking-widest">Support</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="position-relative rounded-lg overflow-hidden shadow-lg" style={{ height: "600px" }}>
+                  <Image 
+                    ref={imageRef}
+                    src="/assets/images/photos/IMG_6402 (1).jpg" 
+                    alt="Life at Le Hotel"
+                    fill
+                    className="object-fit-cover"
+                    style={{ scale: 1.2 }} 
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Apply Modal */}
-      {selectedJob && (
-        <div
-          className="modal-backdrop-custom d-flex align-items-center justify-content-center"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            zIndex: 9999,
-            backdropFilter: "blur(4px)",
-            padding: "20px",
-          }}
-        >
-          <div
-            className="bg-white rounded-lg shadow-lg max-w-600 w-100 position-relative overflow-hidden anim-scale-up"
-            style={{
-              maxHeight: "90vh",
-              overflowY: "auto",
-              animation: "scaleUp 0.3s ease-out",
-            }}
-          >
-            {/* Modal Header */}
-            <div className="bg-heading text-white tw-py-6 tw-px-8 d-flex justify-content-between align-items-center position-relative">
-              <div>
-                <span className="tw-text-xs uppercase text-main-600 fw-bold font-heading">
-                  {t(selectedJob.department)}
-                </span>
-                <h4 className="modal-title tw-text-xl fw-normal text-white font-heading mt-1 mb-0">
-                  {t("jobs.modalTitle")}: {t(selectedJob.title)}
-                </h4>
-              </div>
+        {/* Section 3: Application Form */}
+        <section ref={formRef} className="pt-120 pb-120 bg-white">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-xl-8 col-lg-10">
+                <div className="bg-white rounded-lg shadow-sm border border-neutral-100 p-5 p-md-5">
+                  <div className="text-center tw-mb-10">
+                    <h6 className="tw-text-sm text-uppercase text-main-600 tw-mb-3 font-heading fw-bold tracking-widest">
+                      Submit Application
+                    </h6>
+                    <h2 className="tw-text-4xl fw-normal text-heading font-heading mb-2">
+                      {selectedJob ? `Applying for: ${t(selectedJob.title)}` : "Select a Position to Apply"}
+                    </h2>
+                    <p className="text-neutral-500">
+                      Fill out the form below and our recruitment team will be in touch.
+                    </p>
+                  </div>
 
-              {/* Close Button */}
-              <button
-                onClick={handleCloseModal}
-                className="bg-transparent border-0 text-white tw-text-2xl cursor-pointer hover-text-main-600 transition-all"
-                style={{ outline: "none" }}
-              >
-                <i className="ph ph-x" />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="tw-p-8">
-              {success ? (
-                <div className="text-center tw-py-6">
-                  <i className="ph-fill ph-check-circle tw-text-5xl text-success tw-mb-4 d-block" />
-                  <h4 className="tw-text-xl font-heading fw-semibold text-neutral-800 tw-mb-3">
-                    {t("jobs.modalTitle")} Success
-                  </h4>
-                  <p className="text-neutral-600 font-heading mb-4">
-                    {t("jobs.appSuccess")}
-                  </p>
-                  <button
-                    onClick={handleCloseModal}
-                    className="btn bg-heading hover-bg-main-600 text-white hover-text-heading tw-py-3 tw-px-8 rounded-lg fw-semibold font-heading transition-all border-0"
-                  >
-                    Close
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="row g-4">
-                    {/* Full Name */}
-                    <div className="col-12">
-                      <div className="position-relative contact-form-field">
-                        <span className={`position-absolute top-50 translate-middle-y text-neutral-400 tw-text-xl ${
-                          dir === "rtl" ? "end-0 pe-2" : "start-0 ps-2"
-                        }`}>
-                          <i className="ph-bold ph-user" />
-                        </span>
+                  {success ? (
+                    <div className="text-center tw-py-8">
+                      <i className="ph-fill ph-check-circle tw-text-6xl text-success tw-mb-4 d-block" />
+                      <h4 className="tw-text-2xl font-heading fw-semibold text-heading tw-mb-3">
+                        Application Received
+                      </h4>
+                      <p className="text-neutral-500 font-heading mb-4">
+                        Thank you for your interest. We will review your application and get back to you shortly.
+                      </p>
+                      <button
+                        onClick={() => setSuccess(false)}
+                        className="btn bg-main-600 text-dark hover-bg-heading hover-text-white tw-py-3 tw-px-8 rounded-pill fw-semibold font-heading transition-all border-0"
+                      >
+                        Submit Another
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="row g-4">
+                      <div className="col-md-6">
+                        <label className="tw-text-xs uppercase text-neutral-500 font-heading fw-bold tracking-widest mb-2 ms-2">Full Name *</label>
                         <input
                           type="text"
-                          className={`form-control rounded-0 bg-white shadow-none border-none border-bottom border-bottom-neutral text-heading tw-h-14 focus-border-main-600 ${
-                            dir === "rtl" ? "pe-8 ps-2 text-end" : "ps-8 pe-2"
-                          }`}
-                          placeholder={`${t("jobs.fullName")} *`}
+                          className="form-control form-control-lg bg-neutral-50 border-neutral-100 rounded-pill px-4 font-heading focus-border-main-600 shadow-none"
                           required
                         />
                       </div>
-                    </div>
-
-                    {/* Email */}
-                    <div className="col-12">
-                      <div className="position-relative contact-form-field">
-                        <span className={`position-absolute top-50 translate-middle-y text-neutral-400 tw-text-xl ${
-                          dir === "rtl" ? "end-0 pe-2" : "start-0 ps-2"
-                        }`}>
-                          <i className="ph ph-envelope" />
-                        </span>
+                      <div className="col-md-6">
+                        <label className="tw-text-xs uppercase text-neutral-500 font-heading fw-bold tracking-widest mb-2 ms-2">Email Address *</label>
                         <input
                           type="email"
-                          className={`form-control rounded-0 bg-white shadow-none border-none border-bottom border-bottom-neutral text-heading tw-h-14 focus-border-main-600 ${
-                            dir === "rtl" ? "pe-8 ps-2 text-end" : "ps-8 pe-2"
-                          }`}
-                          placeholder={`${t("jobs.email")} *`}
+                          className="form-control form-control-lg bg-neutral-50 border-neutral-100 rounded-pill px-4 font-heading focus-border-main-600 shadow-none"
                           required
                         />
                       </div>
-                    </div>
-
-                    {/* Cover Letter */}
-                    <div className="col-12">
-                      <div className="position-relative contact-form-field">
-                        <span className={`position-absolute top-0 tw-mt-4 text-neutral-400 tw-text-xl ${
-                          dir === "rtl" ? "end-0 pe-2" : "start-0 ps-2"
-                        }`}>
-                          <i className="ph-bold ph-note-pencil" />
-                        </span>
+                      <div className="col-md-6">
+                        <label className="tw-text-xs uppercase text-neutral-500 font-heading fw-bold tracking-widest mb-2 ms-2">Position *</label>
+                        <select 
+                          className="form-select form-select-lg bg-neutral-50 border-neutral-100 rounded-pill px-4 font-heading focus-border-main-600 shadow-none"
+                          required
+                          value={selectedJob ? selectedJob.id : ""}
+                          onChange={(e) => {
+                            const job = openings.find(j => j.id === e.target.value);
+                            if (job) setSelectedJob(job);
+                          }}
+                        >
+                          <option value="" disabled>Select a role...</option>
+                          {openings.map(job => (
+                            <option key={job.id} value={job.id}>{t(job.title)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-md-6">
+                        <label className="tw-text-xs uppercase text-neutral-500 font-heading fw-bold tracking-widest mb-2 ms-2">Portfolio / LinkedIn</label>
+                        <input
+                          type="url"
+                          className="form-control form-control-lg bg-neutral-50 border-neutral-100 rounded-pill px-4 font-heading focus-border-main-600 shadow-none"
+                        />
+                      </div>
+                      <div className="col-12">
+                        <label className="tw-text-xs uppercase text-neutral-500 font-heading fw-bold tracking-widest mb-2 ms-2">Cover Letter *</label>
                         <textarea
-                          className={`form-control rounded-0 tw-h-135-px bg-white shadow-none border-none border-bottom border-bottom-neutral text-heading focus-border-main-600 ${
-                            dir === "rtl" ? "pe-8 ps-2 text-end" : "ps-8 pe-2"
-                          }`}
-                          placeholder={`${t("jobs.coverLetter")} *`}
+                          className="form-control bg-neutral-50 border-neutral-100 rounded-4 p-4 font-heading focus-border-main-600 shadow-none"
+                          rows={5}
                           required
                         />
                       </div>
-                    </div>
-
-                    {/* Submit Button */}
-                    <div className="col-12 text-center tw-mt-8">
-                      <button
-                        type="submit"
-                        className="btn bg-main-600 hover-bg-heading text-heading hover-text-white tw-py-4 w-100 rounded-lg fw-semibold font-heading transition-all border-0 cursor-pointer"
-                      >
-                        {t("jobs.submitApp")}
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              )}
+                      <div className="col-12 text-center tw-mt-8">
+                        <button
+                          type="submit"
+                          className="btn bg-main-600 hover-bg-heading text-dark hover-text-white tw-py-4 px-5 w-100 rounded-pill fw-bold font-heading transition-all border-0 tracking-widest text-uppercase shadow-sm"
+                        >
+                          Submit Application
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        </section>
+
+      </div>
+      
+      <FooterOne />
     </AOSWrap>
   );
 };

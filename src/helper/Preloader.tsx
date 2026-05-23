@@ -1,18 +1,21 @@
 "use client";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Preloader: FC = () => {
+  const { language } = useLanguage();
   const [active, setActive] = useState<boolean>(true);
 
   useEffect(() => {
+    setActive(true);
     const timer = setTimeout(() => {
       setActive(false);
     }, 500);
 
     // cleanup
     return () => clearTimeout(timer);
-  }, []);
+  }, [language]);
 
   return (
     <>
