@@ -36,7 +36,7 @@ export default function Home() {
       {/* Feature Section (Luxury Amenities GSAP cards) */}
       <FeatureOne />
 
-      {/* Advance Area (Stunning Seychelles locations GSAP fanning cards) */}
+      {/* Advance Area (Stunning city locations GSAP fanning cards) */}
       <AdvanceArea />
 
       {/* Brand Partners (Prestige hover brand logo grid) */}

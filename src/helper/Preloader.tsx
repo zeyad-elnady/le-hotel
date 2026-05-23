@@ -26,25 +26,22 @@ const Preloader: FC = () => {
           <div className='animation-preloader'>
             <div className='position-relative z-1'>
               <div className='loader-border' />
-              <div className='loader-logo position-absolute top-50 start-50 translate-middle tw-z-999'>
-                <Image
-                  width={56}
-                  height={45}
-                  className='position-relative tw-z-999'
-                  src='/assets/images/logo/favicon.png'
-                  alt='brand'
-                />
-              </div>
             </div>
             <div className='txt-loading tw-mt-10'>
-              <span data-text-preloader='E' className='letters-loading'>
-                E
-              </span>
               <span data-text-preloader='l' className='letters-loading'>
                 l
               </span>
-              <span data-text-preloader='i' className='letters-loading'>
-                i
+              <span data-text-preloader='e' className='letters-loading'>
+                e
+              </span>
+              <span data-text-preloader=' ' className='letters-loading' style={{ width: "10px", display: "inline-block" }}>
+                &nbsp;
+              </span>
+              <span data-text-preloader='h' className='letters-loading'>
+                h
+              </span>
+              <span data-text-preloader='o' className='letters-loading'>
+                o
               </span>
               <span data-text-preloader='t' className='letters-loading'>
                 t
@@ -52,17 +49,8 @@ const Preloader: FC = () => {
               <span data-text-preloader='e' className='letters-loading'>
                 e
               </span>
-              <span data-text-preloader='S' className='letters-loading'>
-                S
-              </span>
-              <span data-text-preloader='t' className='letters-loading'>
-                t
-              </span>
-              <span data-text-preloader='a' className='letters-loading'>
-                a
-              </span>
-              <span data-text-preloader='y' className='letters-loading'>
-                y
+              <span data-text-preloader='l' className='letters-loading'>
+                l
               </span>
             </div>
           </div>

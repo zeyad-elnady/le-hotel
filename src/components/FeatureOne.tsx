@@ -1,60 +1,106 @@
 "use client";
-import Image from "next/image";
-import { FC } from "react";
+import { FC, useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const GOLD  = "hsl(43,80%,60%)";
+gsap.registerPlugin(ScrollTrigger);
+
+const GOLD = "hsl(43,80%,60%)";
 const DARK_BROWN = "hsl(26,25%,12%)";
-const PREMIUM_FADE = "linear-gradient(135deg, hsl(26,25%,15%) 0%, hsl(26,30%,8%) 100%)";
 
 const FeatureOne: FC = () => {
   const { t, dir } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const features = [
     {
       nameKey: "home.features.item1",
-      icon: "ph-bold ph-building-apartment",
-      desc: { en: "Breathtaking views above the ocean at golden hour.", ar: "مناظر خلابة فوق المحيط في الساعة الذهبية.", fr: "Vues époustouflantes sur l'océan à l'heure dorée." },
+      icon: "ph-fill ph-buildings",
+      desc: { 
+        en: "Breathtaking views above the city skyline at golden hour.", 
+        ar: "مناظر خلابة فوق أفق المدينة في الساعة الذهبية.", 
+        fr: "Vues époustouflantes sur la ville à l'heure dorée." 
+      },
     },
     {
       nameKey: "home.features.item2",
-      icon: "ph-bold ph-fork-knife",
-      desc: { en: "Gourmet cuisine served under the stars on white sands.", ar: "مأكولات راقية تُقدَّم تحت النجوم على الرمال البيضاء.", fr: "Cuisine gastronomique sous les étoiles sur sable blanc." },
+      icon: "ph-fill ph-star",
+      desc: { 
+        en: "Gourmet cuisine served under the stars on our exclusive rooftop.", 
+        ar: "مأكولات راقية تُقدَّم تحت النجوم في صالتنا الحصرية على السطح.", 
+        fr: "Cuisine gastronomique sous les étoiles sur notre toit exclusif." 
+      },
     },
     {
       nameKey: "home.features.item3",
-      icon: "ph-bold ph-drop",
-      desc: { en: "Restore body and mind in our world-class infinity spa.", ar: "استرخِ بجسدك وعقلك في منتجعنا الصحي اللامتناهي.", fr: "Ressourcez corps et esprit dans notre spa à débordement." },
+      icon: "ph-fill ph-drop",
+      desc: { 
+        en: "Restore body and mind in our world-class luxury spa.", 
+        ar: "استرخِ بجسدك وعقلك في منتجعنا الصحي الفاخر ذو المستوى العالمي.", 
+        fr: "Ressourcez corps et esprit dans notre spa de luxe de classe mondiale." 
+      },
     },
     {
       nameKey: "home.features.item4",
-      icon: "ph-bold ph-anchor",
-      desc: { en: "Set sail on crystalline waters aboard your private yacht.", ar: "أبحر في المياه الكريستالية على متن يختك الخاص.", fr: "Naviguez sur des eaux cristallines à bord de votre yacht." },
+      icon: "ph-fill ph-martini",
+      desc: { 
+        en: "Celebrate in style within our exclusive VIP penthouses.", 
+        ar: "احتفل بأناقة في شقق البنتهاوس الحصرية الخاصة بكبار الشخصيات.", 
+        fr: "Célébrez avec style dans nos penthouses VIP exclusifs." 
+      },
     },
     {
       nameKey: "home.features.item5",
-      icon: "ph-bold ph-music-notes",
-      desc: { en: "Soul-stirring acoustic performances at dusk every evening.", ar: "عروض موسيقية آسرة عند الغسق كل مساء.", fr: "Concerts acoustiques émouvants chaque soir au crépuscule." },
+      icon: "ph-fill ph-music-notes",
+      desc: { 
+        en: "Soul-stirring acoustic performances and live DJs every evening.", 
+        ar: "عروض موسيقية آسرة ودي جي حي كل مساء.", 
+        fr: "Performances acoustiques émouvantes et DJ en direct chaque soir." 
+      },
     },
   ];
 
+  useEffect(() => {
+    if (gridRef.current) {
+      const items = gridRef.current.querySelectorAll('.feature-card');
+      gsap.fromTo(
+        items,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+          },
+        }
+      );
+    }
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       dir={dir}
       style={{
         background: "#faf8f5",
-        padding: "120px 6vw",
+        padding: "120px 0",
         overflow: "hidden",
       }}
     >
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        {/* ── Section header ── */}
+      <div className="container">
+        {/* Section header */}
         <div style={{ textAlign: "center", marginBottom: "72px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginBottom: "20px" }}>
             <span style={{ width: "40px", height: "1px", background: GOLD, display: "block" }} />
             <span
               className="font-heading"
-              style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: DARK_BROWN }}
+              style={{ fontSize: "0.75rem", letterSpacing: "0.3em", textTransform: "uppercase", color: DARK_BROWN, fontWeight: 600 }}
             >
               {t("home.features.subtitle")}
             </span>
@@ -63,7 +109,7 @@ const FeatureOne: FC = () => {
           <h2
             className="font-heading"
             style={{
-              fontSize: "clamp(2rem, 3.5vw, 3.2rem)",
+              fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
               fontWeight: 400,
               color: "#1a0e07",
               lineHeight: 1.1,
@@ -75,106 +121,72 @@ const FeatureOne: FC = () => {
           </h2>
         </div>
 
-        {/* ── Feature cards ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "24px",
-          }}
-        >
-          {features.map((feat, idx) => (
-            <div
-              key={idx}
-              style={{
-                background: "#fff",
-                borderRadius: "20px",
-                padding: "40px 32px",
-                border: "1px solid #ede8e2",
-                transition: "transform 0.3s, box-shadow 0.3s, border-color 0.3s",
-                cursor: "default",
-                position: "relative",
-                overflow: "hidden",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.transform = "translateY(-8px)";
-                el.style.boxShadow = "0 20px 60px rgba(26,14,7,0.12)";
-                el.style.borderColor = GOLD;
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.transform = "translateY(0)";
-                el.style.boxShadow = "none";
-                el.style.borderColor = "#ede8e2";
-              }}
-            >
-              {/* background number */}
-              <span
-                className="font-heading"
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  right: dir === "rtl" ? "auto" : "20px",
-                  left: dir === "rtl" ? "20px" : "auto",
-                  fontSize: "4rem",
-                  color: "#f0ebe4",
-                  lineHeight: 1,
-                  userSelect: "none",
-                  zIndex: 0,
-                }}
-              >
-                {String(idx + 1).padStart(2, "0")}
-              </span>
-
-              {/* icon */}
-              <div
-                style={{
-                  width: "56px",
-                  height: "56px",
-                  borderRadius: "14px",
-                  background: "rgba(20, 10, 5, 0.06)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "28px",
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                <i className={feat.icon} style={{ fontSize: "1.5rem", color: GOLD }} />
+        {/* Feature Grid: 2 items top row, 3 items bottom row */}
+        <div className="row g-4 justify-content-center" ref={gridRef}>
+          {features.map((feat, idx) => {
+            const isTopRow = idx < 2;
+            return (
+              <div key={idx} className={isTopRow ? "col-lg-6 col-md-6" : "col-lg-4 col-md-6"}>
+                <div
+                  className="feature-card bg-white rounded-4 transition-all group d-flex flex-column h-100"
+                  style={{
+                    padding: "48px 40px",
+                    border: "1px solid #ede8e2",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.02)",
+                    cursor: "default",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.transform = "translateY(-8px)";
+                    el.style.boxShadow = "0 20px 50px rgba(200,160,80,0.15)";
+                    el.style.borderColor = GOLD;
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.transform = "translateY(0)";
+                    el.style.boxShadow = "0 10px 30px rgba(0,0,0,0.02)";
+                    el.style.borderColor = "#ede8e2";
+                  }}
+                >
+                  <div
+                    className="d-inline-flex align-items-center justify-content-center rounded-circle transition-all group-hover-bg-main-600 group-hover-text-white mb-4"
+                    style={{
+                      width: "72px",
+                      height: "72px",
+                      background: "rgba(200, 160, 80, 0.08)",
+                      color: GOLD,
+                    }}
+                  >
+                    <i className={feat.icon} style={{ fontSize: "2.2rem" }} />
+                  </div>
+                  
+                  <h3
+                    className="font-heading"
+                    style={{
+                      fontSize: "1.3rem",
+                      fontWeight: 400,
+                      color: DARK_BROWN,
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {t(feat.nameKey)}
+                  </h3>
+                  
+                  <p
+                    className="flex-grow-1"
+                    style={{
+                      fontSize: "1rem",
+                      color: "#8a7065",
+                      lineHeight: 1.7,
+                      margin: 0,
+                    }}
+                  >
+                    {t(feat.desc)}
+                  </p>
+                </div>
               </div>
-
-              {/* title */}
-              <h3
-                className="font-heading"
-                style={{
-                  fontSize: "1.05rem",
-                  fontWeight: 400,
-                  color: "#1a0e07",
-                  marginBottom: "12px",
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                {t(feat.nameKey)}
-              </h3>
-
-              {/* desc */}
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  color: "#8a7065",
-                  lineHeight: 1.7,
-                  margin: 0,
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                {t(feat.desc)}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

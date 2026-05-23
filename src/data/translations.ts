@@ -43,12 +43,12 @@ export const translations = {
   },
   home: {
     hero: {
-      subtitle: { en: "A RARE COMBINATION OF LUXURY & NATURE", ar: "مزيج نادر من الفخامة والطبيعة الساحرة", fr: "UN MÉLANGE UNIQUE DE LUXE ET DE NATURE" },
-      title: { en: "Where Luxury Meets Serenity", ar: "حيث تلتقي الفخامة بالهدوء المطلق", fr: "Où le Luxe Rencontre la Sérénité" },
+      subtitle: { en: "A RARE COMBINATION OF LUXURY & EXCLUSIVE EVENTS", ar: "مزيج نادر من الفخامة والفعاليات الحصرية", fr: "UN MÉLANGE UNIQUE DE LUXE ET D'ÉVÉNEMENTS EXCLUSIFS" },
+      title: { en: "Where Luxury Meets Celebration", ar: "حيث تلتقي الفخامة بالاحتفالات المذهلة", fr: "Où le Luxe Rencontre la Célébration" },
       desc: {
-        en: "Nestled in the heart of paradise, le hotel offers a sanctuary of refined elegance, world-class dining, and tailored personal attention.",
-        ar: "يقع فندق لو هوتيل في قلب الجنة الطبيعية، ويقدم ملاذاً من الأناقة الراقية، وتناول الطعام على مستوى عالمي، والاهتمام الشخصي المصمم خصيصاً لك.",
-        fr: "Niché au cœur d'un paradis, le hotel offre un sanctuaire d'élégance raffinée, une cuisine de classe mondiale et une attention personnalisée.",
+        en: "Nestled in the heart of the city, le hotel offers a sanctuary of refined elegance, world-class dining, and unforgettable luxury parties.",
+        ar: "يقع فندق لو هوتيل في قلب المدينة، ويقدم ملاذاً من الأناقة الراقية، وتناول الطعام على مستوى عالمي، وحفلات فاخرة لا تُنسى.",
+        fr: "Niché au cœur de la ville, le hotel offre un sanctuaire d'élégance raffinée, une cuisine de classe mondiale et des fêtes luxueuses inoubliables.",
       },
     },
     about: {
@@ -74,9 +74,9 @@ export const translations = {
       subtitle: { en: "UNFORGETTABLE EXPERIENCES", ar: "تجارب لا تُنسى", fr: "EXPÉRIENCES INOUBLIABLES" },
       title: { en: "Live the Magic of le hotel", ar: "عش سحر وجمال فندق لو هوتيل", fr: "Vivez la Magie de le hotel" },
       desc: {
-        en: "Indulge in private infinity pool dips, personalized sunrise yoga sessions, or our masterclass culinary tours led by global chefs.",
-        ar: "استمتع بالسباحة في حمامات السباحة اللامتناهية الخاصة، وجلسات اليوغا المخصصة مع شروق الشمس، أو جولات الطهي الاحترافية بإشراف طهاة عالميين.",
-        fr: "Profitez de baignades dans des piscines privées à débordement, de séances de yoga personnalisées au lever du soleil ou de cours de cuisine dispensés par des chefs mondiaux.",
+        en: "Indulge in exclusive birthday celebrations, private penthouse parties, and our masterclass culinary events led by global chefs.",
+        ar: "استمتع باحتفالات أعياد الميلاد الحصرية، والحفلات الخاصة في البنتهاوس، أو فعاليات الطهي الاحترافية بإشراف طهاة عالميين.",
+        fr: "Profitez de célébrations d'anniversaire exclusives, de fêtes privées en penthouse et d'événements culinaires dispensés par des chefs mondiaux.",
       },
     },
     advance: {
@@ -90,10 +90,10 @@ export const translations = {
     features: {
       subtitle: { en: "DEDICATED TO YOUR COMFORT", ar: "مكرسون بالكامل لراحتك ورفاهيتك", fr: "DÉDIÉ À VOTRE CONFORT" },
       title: { en: "World-Class Amenities To Elevate Your Stay", ar: "مرافق عالمية المستوى للارتقاء بتجربة إقامتك معنا", fr: "Des Équipements de Classe Mondiale pour Élever Votre Séjour" },
-      item1: { en: "Rooftop Ocean Lounge", ar: "صالة المحيط على السطح", fr: "Salon de l'Océan sur le Toit" },
-      item2: { en: "Private Beach Dining & BBQ", ar: "تناول الطعام والشواء على الشاطئ الخاص", fr: "Dîner Privé sur la Plage & Barbecue" },
+      item1: { en: "Rooftop Skyline Lounge", ar: "صالة السطح المطلة على المدينة", fr: "Salon sur le Toit" },
+      item2: { en: "Private Event Dining & VIP Rooms", ar: "غرف طعام خاصة ومناسبات كبار الشخصيات", fr: "Dîner Privé & Salles VIP" },
       item3: { en: "Wellness Infinity Spa", ar: "منتجع صحي لا متناهي متكامل", fr: "Spa de Bien-être à Débordement" },
-      item4: { en: "Private Yacht Charter", ar: "استئجار اليخوت والقوارب الخاصة", fr: "Location de Yacht Privé" },
+      item4: { en: "Exclusive Party Venues", ar: "أماكن حصرية للحفلات الخاصة", fr: "Lieux de Fête Exclusifs" },
       item5: { en: "Live Sunset Acoustic Sessions", ar: "جلسات موسيقية حية وقت الغروب", fr: "Sessions Acoustiques au Coucher du Soleil" },
     },
     brands: {
@@ -121,9 +121,9 @@ export const translations = {
         beds: { en: "1 King Bed", ar: "1 سرير كينج كبير", fr: "1 Lit King-Size" },
         size: { en: "120 m²", ar: "120 متر مربع", fr: "120 m²" },
         desc: {
-          en: "The pinnacle of luxury. Featuring panoramic views of the ocean, a private dining room, and an infinity dipping pool.",
-          ar: "قمة الفخامة والرفاهية. يتميز بإطلالات بانورامية على المحيط، وغرفة طعام خاصة، وحمام سباحة لا متناهي خاص.",
-          fr: "Le summum du luxe. Offrant des vues panoramiques sur l'océan, une salle à manger privée et une piscine privée.",
+          en: "The pinnacle of luxury. Featuring panoramic views of the city skyline, a private dining room, and an expansive entertainment lounge.",
+          ar: "قمة الفخامة والرفاهية. يتميز بإطلالات بانورامية على أفق المدينة، وغرفة طعام خاصة، وصالة ترفيه واسعة للحفلات.",
+          fr: "Le summum du luxe. Offrant des vues panoramiques sur la ville, une salle à manger privée et un vaste salon de divertissement.",
         },
       },
       {
@@ -134,9 +134,9 @@ export const translations = {
         beds: { en: "1 King Bed", ar: "1 سرير كينج كبير", fr: "1 Lit King-Size" },
         size: { en: "95 m²", ar: "95 متر مربع", fr: "95 m²" },
         desc: {
-          en: "Surrounded by lush botanicals, this suite features an outdoor rainfall shower and a private garden deck for relaxation.",
-          ar: "محاط بالحدائق والنباتات المورقة، ويضم هذا الجناح دشاً خارجياً مطرياً وتراساً خاصاً في الحديقة للاسترخاء.",
-          fr: "Entourée de jardins luxuriants, cette suite comprend une douche extérieure à effet pluie et une terrasse privée.",
+          en: "A perfect venue for intimate gatherings, this suite features premium acoustics, a private bar, and a sprawling lounge area.",
+          ar: "المكان المثالي للتجمعات الحميمة والحفلات الخاصة، يتميز هذا الجناح بعزل صوتي ممتاز، وبار خاص، ومساحة صالة واسعة.",
+          fr: "Lieu idéal pour des rassemblements intimes, cette suite offre une acoustique haut de gamme, un bar privé et un vaste salon.",
         },
       },
       {
@@ -147,22 +147,22 @@ export const translations = {
         beds: { en: "1 Queen Bed", ar: "1 سرير كوين مريح", fr: "1 Lit Queen-Size" },
         size: { en: "60 m²", ar: "60 متر مربع", fr: "60 m²" },
         desc: {
-          en: "Artfully crafted spaces featuring bespoke wooden paneling, a marble bath oasis, and a private sea-facing balcony.",
-          ar: "مساحة مصممة بأسلوب فني وتفاصيل خشبية مخصصة، وحمام رخامي رائع، وشرفة خاصة تطل مباشرة على البحر.",
-          fr: "Des espaces artistiquement conçus avec des boiseries sur mesure, une baignoire en marbre et un balcon privé face à la mer.",
+          en: "Artfully crafted spaces featuring bespoke wooden paneling, a marble bath oasis, and a private balcony overlooking the city.",
+          ar: "مساحة مصممة بأسلوب فني وتفاصيل خشبية مخصصة، وحمام رخامي رائع، وشرفة خاصة تطل مباشرة على المدينة.",
+          fr: "Des espaces artistiquement conçus avec des boiseries sur mesure, une baignoire en marbre et un balcon privé face à la ville.",
         },
       },
       {
         id: "4",
         type: "deluxe",
-        title: { en: "Ocean Oasis Room", ar: "غرفة واحة المحيط", fr: "Chambre Oasis sur l'Océan" },
+        title: { en: "Metropolis Party Room", ar: "غرفة حفلات وسط المدينة", fr: "Chambre de Fête Métropole" },
         price: "480",
         beds: { en: "2 Double Beds", ar: "2 سرير مزدوج", fr: "2 Lits Doubles" },
         size: { en: "55 m²", ar: "55 متر مربع", fr: "55 m²" },
         desc: {
-          en: "Wake up to soothing ocean waves. Modern design details, premium acoustics, and direct beach trail access.",
-          ar: "استيقظ على أصوات أمواج المحيط الهادئة. تفاصيل تصميم حديثة، عزل صوتي متطور، ووصول مباشر إلى الشاطئ.",
-          fr: "Réveillez-vous au son apaisant des vagues. Design moderne, insonorisation de qualité supérieure et accès direct à la plage.",
+          en: "Experience the vibrant city heartbeat. Modern design details, premium acoustics, and direct access to our exclusive party venues.",
+          ar: "استمتع بنبض المدينة الحيوي. تفاصيل تصميم حديثة، عزل صوتي متطور، ووصول مباشر إلى أماكن الحفلات الحصرية لدينا.",
+          fr: "Vivez au rythme de la ville. Design moderne, acoustique haut de gamme et accès direct à nos lieux de fête exclusifs.",
         },
       },
     ],
@@ -200,9 +200,9 @@ export const translations = {
         name: "Marc-Antoine Dubois",
         role: { en: "Culinary Enthusiast", ar: "ناقد طعام وتذوق", fr: "Passionné de Gastronomie" },
         text: {
-          en: "The Michelin dining experience at le hotel exceeded all expectations. Every dish was a sensory masterpiece. Combine that with the ocean breeze, and it's perfection.",
-          ar: "تجربة تناول الطعام الحائزة على نجمة ميشلان في فندق لو هوتيل تفوقت على جميع توقعاتي. كل طبق كان لوحة فنية حسية مدهشة. مع نسيم المحيط، كانت التجربة مثالية تماماً.",
-          fr: "L'expérience gastronomique étoilée au le hotel a dépassé toutes nos attentes. Chaque plat était un chef-d'œuvre sensoriel. Avec la brise de l'océan, c'est la perfection.",
+          en: "The Michelin dining experience at le hotel exceeded all expectations. Every dish was a sensory masterpiece. Combine that with an incredible birthday party setting, and it's perfection.",
+          ar: "تجربة تناول الطعام الحائزة على نجمة ميشلان في فندق لو هوتيل تفوقت على جميع توقعاتي. كل طبق كان لوحة فنية حسية مدهشة. مع إعدادات حفلة عيد ميلاد مذهلة، كانت التجربة مثالية تماماً.",
+          fr: "L'expérience gastronomique étoilée au le hotel a dépassé toutes nos attentes. Chaque plat était un chef-d'œuvre sensoriel. Combiné à un cadre de fête d'anniversaire incroyable, c'est la perfection.",
         },
         rating: 5,
         date: "April 2026",
@@ -211,9 +211,9 @@ export const translations = {
         name: "Yousef Al-Mansoor",
         role: { en: "Business Executive", ar: "رائد أعمال ورجل أعمال تنفيذي", fr: "Cadre Dirigeant" },
         text: {
-          en: "The peace and serenity here is unmatched. It is the perfect place to detox and disconnect. The spa treatments are world-class, and the ocean suite is exceptionally peaceful.",
-          ar: "الهدوء والسكينة هنا لا مثيل لهما على الإطلاق. إنه المكان المثالي لتجديد النشاط والراحة. علاجات السبا والمنتجع صحي بمستوى عالمي، وجناح المحيط هادئ للغاية.",
-          fr: "Le calme et la sérénité ici sont inégalés. C'est l'endroit parfait pour se ressourcer. Les soins du spa sont de classe mondiale et la suite océan est exceptionnellement paisible.",
+          en: "The luxury and exclusivity here is unmatched. It is the perfect place to celebrate. The VIP services are world-class, and the executive suite was perfect for our private party.",
+          ar: "الفخامة والحصرية هنا لا مثيل لهما على الإطلاق. إنه المكان المثالي للاحتفال. خدمات كبار الشخصيات بمستوى عالمي، والجناح التنفيذي كان مثالياً لحفلتنا الخاصة.",
+          fr: "Le luxe et l'exclusivité ici sont inégalés. C'est l'endroit parfait pour célébrer. Les services VIP sont de classe mondiale et la suite exécutive était parfaite pour notre fête privée.",
         },
         rating: 5,
         date: "March 2026",
@@ -246,7 +246,7 @@ export const translations = {
         id: "1",
         title: { en: "Front Desk Ambassador", ar: "سفير الاستقبال والترحيب", fr: "Ambassadeur de la Réception" },
         department: { en: "Guest Relations", ar: "علاقات الضيوف والنزلاء", fr: "Relations Clients" },
-        location: { en: "Seychelles Resort", ar: "منتجع سيشيل الفاخر", fr: "Seychelles Resort" },
+        location: { en: "Downtown Metropolis", ar: "وسط المدينة", fr: "Centre-Ville" },
         type: { en: "Full-Time", ar: "دوام كامل", fr: "Temps Plein" },
         desc: {
           en: "As the first point of contact, you will craft flawless, personalized check-in experiences and ensure guests feel welcomed into a world of ultimate refinement.",
@@ -258,7 +258,7 @@ export const translations = {
         id: "2",
         title: { en: "Executive Sous Chef", ar: "مساعد رئيس طهاة تنفيذي", fr: "Sous-Chef Exécutif" },
         department: { en: "Culinary Arts", ar: "فنون الطهي والمطبخ", fr: "Arts Culinaires" },
-        location: { en: "Seychelles Resort", ar: "منتجع سيشيل الفاخر", fr: "Seychelles Resort" },
+        location: { en: "Downtown Metropolis", ar: "وسط المدينة", fr: "Centre-Ville" },
         type: { en: "Full-Time", ar: "دوام كامل", fr: "Temps Plein" },
         desc: {
           en: "Collaborate in our Michelin-starred kitchen. Oversee preparation of custom banquets and refine modern sensory dishes utilizing premium local botanicals.",
@@ -270,7 +270,7 @@ export const translations = {
         id: "3",
         title: { en: "Luxury Spa Therapist", ar: "معالج صحي وتجميلي فاخر", fr: "Thérapeute de Spa de Luxe" },
         department: { en: "Wellness & Spa", ar: "المنتجع الصحي والويلنس", fr: "Spa et Bien-être" },
-        location: { en: "Seychelles Resort", ar: "منتجع سيشيل الفاخر", fr: "Seychelles Resort" },
+        location: { en: "Downtown Metropolis", ar: "وسط المدينة", fr: "Centre-Ville" },
         type: { en: "Full-Time / Part-Time", ar: "دوام كامل / جزئي", fr: "Temps Plein / Partiel" },
         desc: {
           en: "Deliver ultra-luxurious, tailored massage therapies, skincare rituals, and aromatherapy journeys designed to disconnect the body and rejuvenate the spirit.",
@@ -284,19 +284,44 @@ export const translations = {
     title: { en: "Our Sacred Sanctuary", ar: "ملاذنا المقدس والفريد", fr: "Notre Sanctuaire Sacré" },
     subtitle: { en: "A Tradition of Ultra-Luxury", ar: "تاريخ عريق وممتد من الفخامة الفائقة", fr: "Une Tradition d'Ultra-Luxe" },
     text1: {
-      en: "Founded on the principles of immaculate service and quiet elegance, le hotel is more than a destination; it is a philosophy of living beautifully. We offer guests a rare cocoon of comfort surrounded by the world's most breathtaking scenery.",
-      ar: "تأسس فندق لو هوتيل على مبادئ الخدمة المثالية والأناقة الهادئة والراقية، وهو أكثر من مجرد وجهة سفر؛ إنه فلسفة للحياة الراقية. نحن نقدم لضيوفنا شرنقة نادرة من الراحة محاطة بأروع المناظر الطبيعية الخلابة في العالم.",
-      fr: "Fondé sur les principes d'un service impeccable et d'une élégance discrète, le hotel est plus qu'une destination ; c'est une philosophie de vie. Nous offrons à nos clients un cocon de confort entouré de paysages spectaculaires.",
+      en: "Founded on the principles of immaculate service and vibrant celebrations, le hotel is more than a destination; it is a philosophy of living beautifully. We offer guests an exclusive venue for luxury stays and unforgettable parties.",
+      ar: "تأسس فندق لو هوتيل على مبادئ الخدمة المثالية والاحتفالات النابضة بالحياة، وهو أكثر من مجرد وجهة؛ إنه فلسفة للحياة الراقية. نحن نقدم لضيوفنا مكاناً حصرياً لإقامات فاخرة وحفلات لا تُنسى.",
+      fr: "Fondé sur les principes d'un service impeccable et de célébrations vibrantes, le hotel est plus qu'une destination ; c'est une philosophie de vie. Nous offrons à nos clients un lieu exclusif pour des séjours de luxe et des fêtes inoubliables.",
     },
     text2: {
       en: "Every element of our architecture pay homage to local heritage while integrating advanced climate intelligence and bespoke design solutions. Here, luxury does not demand attention; it quietly embraces you.",
       ar: "كل عنصر من عناصر هندستنا المعمارية يكرّم التراث المحلي بينما يدمج الذكاء المناخي المتقدم وحلول التصميم المخصصة. هنا، الفخامة لا تطلب الاهتمام؛ بل تحتضنك بهدوء تام.",
       fr: "Chaque élément de notre architecture rend hommage au patrimoine local tout en intégrant une intelligence climatique avancée. Ici, le luxe ne réclame pas l'attention ; il vous enveloppe discrètement.",
     },
+    visionTitle: { en: "Our Vision", ar: "رؤيتنا", fr: "Notre Vision" },
+    visionText: { 
+      en: "To redefine ultra-luxury hospitality by merging untouched natural beauty with unparalleled, intuitive service.", 
+      ar: "إعادة تعريف الضيافة الفائقة الفخامة من خلال دمج الجمال الطبيعي البكر مع خدمة استثنائية وبديهية لا مثيل لها.", 
+      fr: "Redéfinir l'hôtellerie de luxe en fusionnant une beauté naturelle intacte avec un service intuitif et inégalé." 
+    },
+    valuesTitle: { en: "Our Core Values", ar: "قيمنا الأساسية", fr: "Nos Valeurs Fondamentales" },
+    values: [
+      {
+        title: { en: "Excellence", ar: "التميز", fr: "Excellence" },
+        desc: { en: "A relentless pursuit of perfection in every detail.", ar: "سعي دؤوب نحو الكمال في كل التفاصيل.", fr: "Une quête incessante de perfection dans chaque détail." }
+      },
+      {
+        title: { en: "Serenity", ar: "السكينة", fr: "Sérénité" },
+        desc: { en: "Cultivating environments of absolute peace and tranquility.", ar: "توفير بيئات تنبض بالسلام المطلق والهدوء.", fr: "Cultiver des environnements de paix et de tranquillité absolues." }
+      },
+      {
+        title: { en: "Authenticity", ar: "الأصالة", fr: "Authenticité" },
+        desc: { en: "Honoring local heritage and embracing genuine human connections.", ar: "تكريم التراث المحلي وتعزيز الروابط الإنسانية الحقيقية.", fr: "Honorer le patrimoine local et favoriser des connexions humaines authentiques." }
+      },
+      {
+        title: { en: "Innovation", ar: "الابتكار", fr: "Innovation" },
+        desc: { en: "Pioneering sustainable and intelligent luxury experiences.", ar: "الريادة في تقديم تجارب فاخرة ذكية ومستدامة.", fr: "Pionnier des expériences de luxe intelligentes et durables." }
+      }
+    ],
     stats: {
       awards: { en: "Global Design Awards", ar: "جوائز تصميم عالمية", fr: "Prix de Design Globaux" },
       clients: { en: "Serene Celebrations", ar: "ضيف سعيد ومحتفل", fr: "Célébrations Sereines" },
-      rooms: { en: "Bespoke Ocean Suites", ar: "جناح محيط مخصص", fr: "Suites Océan sur Mesure" },
+      rooms: { en: "Bespoke Party Suites", ar: "أجنحة احتفالات مخصصة", fr: "Suites de Fête sur Mesure" },
     },
   },
   contact: {
@@ -316,9 +341,9 @@ export const translations = {
     infoTitle: { en: "Sanctuary Details", ar: "تفاصيل الاتصال والملاذ", fr: "Détails du Sanctuaire" },
     addressLabel: { en: "Address", ar: "العنوان", fr: "Adresse" },
     addressVal: {
-      en: "Anse Source d'Argent, La Digue, Seychelles",
-      ar: "أنف سورس دأرجنت، لا ديغ، سيشيل",
-      fr: "Anse Source d'Argent, La Digue, Seychelles",
+      en: "123 Luxury Avenue, Metropolis Center",
+      ar: "123 شارع الفخامة، وسط العاصمة",
+      fr: "123 Avenue de Luxe, Centre Métropole",
     },
     phone: { en: "Phone", ar: "الهاتف", fr: "Téléphone" },
     email: { en: "Email", ar: "البريد الإلكتروني", fr: "E-mail" },

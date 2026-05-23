@@ -177,7 +177,7 @@ const AdvanceArea: FC = () => {
 
           {/* 4 smaller images in a 2×2 */}
           {PHOTOS.slice(1, 5).map((src, i) => {
-            const names = ["Ocean Terrace", "Garden Pool", "Private Beach", "Spa Retreat"];
+            const names = ["Rooftop Terrace", "VIP Lounge", "Private Suite", "Exclusive Club"];
             return (
               <div
                 key={i}
