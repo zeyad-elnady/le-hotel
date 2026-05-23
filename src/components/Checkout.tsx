@@ -157,7 +157,7 @@ const Checkout: FC = () => {
             </label>
             <DatePicker
               selected={checkInDate}
-              onChange={(d) => setCheckInDate(d)}
+              onChange={(d: Date | null) => setCheckInDate(d)}
               customInput={<CustomDateInput placeholder={t("checkout.checkIn")} />}
               dateFormat="MMM d, yyyy"
               wrapperClassName="w-100"
@@ -174,7 +174,7 @@ const Checkout: FC = () => {
             </label>
             <DatePicker
               selected={checkOutDate}
-              onChange={(d) => setCheckOutDate(d)}
+              onChange={(d: Date | null) => setCheckOutDate(d)}
               customInput={<CustomDateInput placeholder={t("checkout.checkOut")} />}
               dateFormat="MMM d, yyyy"
               wrapperClassName="w-100"
