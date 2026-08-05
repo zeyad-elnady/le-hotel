@@ -65,23 +65,20 @@ const HeaderOne: FC = () => {
           {/* ── Logo ── */}
           <Link
             href="/"
-            style={{ textDecoration: "none", flexShrink: 0 }}
+            style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center" }}
             aria-label="le hotel – home"
           >
-            <span
-              className="font-heading"
+            <img
+              src="/assets/images/logo/logo.png"
+              alt="le hotel Logo"
               style={{
-                fontSize: "1.6rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#fff",
-                fontWeight: 400,
-                lineHeight: 1,
+                height: "90px",
+                width: "auto",
+                display: "block",
+                marginTop: "-15px",
+                marginBottom: "-10px",
               }}
-            >
-              le&nbsp;
-              <span style={{ color: GOLD }}>hotel</span>
-            </span>
+            />
           </Link>
 
           {/* ── Desktop nav ── */}
@@ -267,19 +264,24 @@ const HeaderOne: FC = () => {
         <Link
           href="/"
           onClick={() => setMobileOpen(false)}
-          className="font-heading"
           style={{
-            fontSize: "1.6rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "#fff",
-            fontWeight: 400,
             textDecoration: "none",
             marginBottom: "48px",
-            display: "block",
+            display: "flex",
+            alignItems: "center"
           }}
         >
-          le&nbsp;<span style={{ color: GOLD }}>hotel</span>
+          <img
+            src="/assets/images/logo/logo.png"
+            alt="le hotel Logo"
+            style={{
+              height: "76px",
+              width: "auto",
+              display: "block",
+              marginTop: "-10px",
+              marginBottom: "-10px",
+            }}
+          />
         </Link>
 
         {/* nav items */}

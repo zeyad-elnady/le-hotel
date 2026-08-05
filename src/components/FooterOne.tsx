@@ -37,19 +37,17 @@ const FooterOne: FC = () => {
           style={{ textDecoration: "none", display: "inline-block" }}
           aria-label="le hotel homepage"
         >
-          <span
-            className="font-heading"
+          <img
+            src="/assets/images/logo/logo.png"
+            alt="le hotel Logo"
             style={{
-              fontSize: "clamp(2.4rem, 5vw, 4rem)",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "#fff",
-              fontWeight: 400,
-              lineHeight: 1,
+              height: "120px",
+              width: "auto",
+              display: "block",
+              marginTop: "-20px",
+              marginBottom: "-15px",
             }}
-          >
-            le <span>hotel</span>
-          </span>
+          />
         </Link>
 
         {/* tagline */}

@@ -1,32 +1,60 @@
 "use client";
+
 import React, { useState } from "react";
 import AOSWrap from "@/helper/AOSWrap";
 import Preloader from "@/helper/Preloader";
 
 import Breadcrumb from "@/components/Breadcrumb";
 import FooterOne from "@/components/FooterOne";
+import TestimonialsV2 from "@/components/ui/testimonial-v2";
 import { useLanguage } from "@/context/LanguageContext";
-import { translations } from "@/data/translations";
+
+const GOLD = "#c8a050";
 
 interface ReviewItem {
   name: string;
-  role: { en: string; ar: string; fr: string };
-  text: { en: string; ar: string; fr: string };
+  text: string;
   rating: number;
-  date: string;
 }
 
 const ReviewsPage: React.FC = () => {
-  const { t, dir } = useLanguage();
+  const { t, dir, language } = useLanguage();
   const [success, setSuccess] = useState(false);
   const [rating, setRating] = useState<number>(5);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
-
-  // We can maintain a local list of reviews to let users dynamically see their reviews appended!
   const [userReviews, setUserReviews] = useState<ReviewItem[]>([]);
 
-  const defaultReviews = translations.reviews.items;
-  const allReviews = [...defaultReviews, ...userReviews];
+  const title: Record<string, string> = {
+    en: "Share Your Experience",
+    ar: "شاركنا تجربتك",
+    fr: "Partagez Votre Expérience",
+  };
+
+  const subtitle: Record<string, string> = {
+    en: "WE VALUE YOUR FEEDBACK",
+    ar: "نقدر ملاحظاتك",
+    fr: "VOTRE AVIS COMPTE",
+  };
+
+  const desc: Record<string, string> = {
+    en: "Your words inspire us to deliver even greater experiences. Tell us about your stay.",
+    ar: "كلماتك تلهمنا لتقديم تجارب أفضل. أخبرنا عن إقامتك.",
+    fr: "Vos mots nous inspirent à offrir des expériences encore plus exceptionnelles.",
+  };
+
+  const successMsg: Record<string, string> = {
+    en: "Thank you for sharing your experience! Your review has been submitted.",
+    ar: "شكراً لمشاركتك تجربتك! تم إرسال تقييمك.",
+    fr: "Merci d'avoir partagé votre expérience ! Votre avis a été soumis.",
+  };
+
+  const labels = {
+    rating: { en: "Your Rating", ar: "تقييمك", fr: "Votre Note" },
+    name: { en: "Your Name", ar: "اسمك", fr: "Votre Nom" },
+    email: { en: "Email Address", ar: "البريد الإلكتروني", fr: "Adresse Email" },
+    comment: { en: "Tell us about your stay...", ar: "أخبرنا عن إقامتك...", fr: "Parlez-nous de votre séjour..." },
+    submit: { en: "Submit Review", ar: "إرسال التقييم", fr: "Soumettre l'Avis" },
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,227 +64,284 @@ const ReviewsPage: React.FC = () => {
     const email = formData.get("email") as string;
 
     if (name && comment && email) {
-      // Simulate adding review
-      const newReview: ReviewItem = {
-        name,
-        role: { en: "Hotel Guest", ar: "نزيل الفندق", fr: "Client de l'Hôtel" },
-        text: { en: comment, ar: comment, fr: comment },
-        rating,
-        date: "Just now",
-      };
-      
-      setUserReviews([newReview, ...userReviews]);
+      setUserReviews([{ name, text: comment, rating }, ...userReviews]);
       setSuccess(true);
       e.currentTarget.reset();
       setRating(5);
     }
   };
 
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "16px 20px",
+    fontSize: "14px",
+    color: "#1a0e07",
+    backgroundColor: "#f5f0eb",
+    border: "1.5px solid transparent",
+    borderRadius: "16px",
+    outline: "none",
+    transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+    fontFamily: "inherit",
+  };
+
+  const inputFocusHandler = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.currentTarget.style.borderColor = "rgba(200, 160, 80, 0.5)";
+    e.currentTarget.style.boxShadow = "0 0 0 4px rgba(200, 160, 80, 0.08)";
+  };
+
+  const inputBlurHandler = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.currentTarget.style.borderColor = "transparent";
+    e.currentTarget.style.boxShadow = "none";
+  };
+
   return (
     <AOSWrap>
-      {/* Preloader */}
       <Preloader />
 
-      {/* Breadcrumb */}
       <Breadcrumb title={t("nav.reviews")} sub_title={t("reviews.subtitle")} />
 
-      {/* Testimonials Showcase Section */}
-      <section className="bg_2 pt-120 pb-120">
+      <TestimonialsV2 />
+
+      {/* ── Share Your Experience Section ── */}
+      <section
+        dir={dir}
+        style={{
+          backgroundColor: "#faf8f5",
+          paddingBottom: "120px",
+          paddingTop: "20px",
+        }}
+      >
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10">
-              <div className="section-two-wrapper text-center tw-mb-12">
-                <h6 className="section-two-subtitle tw-text-xl text-uppercase text-main-three-800 tw-mb-4 font-heading">
-                  {t("reviews.subtitle")}
-                </h6>
-                <h2 className="section-two-title tw-text-16 fw-normal font-heading">
-                  {t("reviews.title")}
-                </h2>
-              </div>
-
-              {/* Aggregated Rating Widget */}
-              <div className="bg-white rounded-lg shadow-sm border border-neutral-100 tw-p-8 text-center tw-mb-14 max-w-500 mx-auto">
-                <h4 className="tw-text-xl fw-semibold text-neutral-800 tw-mb-2 font-heading">
-                  {t("reviews.averageRating")}
-                </h4>
-                <div className="d-flex justify-content-center align-items-center gap-2 tw-mb-2">
-                  <span className="tw-text-4xl fw-bold text-heading font-heading">5.0</span>
-                  <div className="text-warning d-flex gap-1 tw-text-2xl">
-                    <i className="ph-fill ph-star" />
-                    <i className="ph-fill ph-star" />
-                    <i className="ph-fill ph-star" />
-                    <i className="ph-fill ph-star" />
-                    <i className="ph-fill ph-star" />
-                  </div>
-                </div>
-                <p className="text-neutral-500 tw-text-sm mb-0 uppercase tracking-wider">
-                  {t("reviews.basedOn")}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Testimonial Cards Grid */}
-          <div className="row gy-4 justify-content-center tw-mb-16">
-            {allReviews.map((review, idx) => (
-              <div className="col-lg-6 col-12" key={idx}>
-                <div className="bg-white rounded-lg shadow-sm border border-neutral-100 tw-p-8 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden">
-                  {/* Decorative Quote Icon */}
-                  <span
-                    className={`position-absolute text-neutral-100 tw-text-8xl opacity-30 ${
-                      dir === "rtl" ? "start-0 tw-ms-6" : "end-0 tw-me-6"
-                    }`}
-                    style={{ top: "-10px", pointerEvents: "none", zIndex: 0 }}
+            <div className="col-xl-7 col-lg-9">
+              {/* Card Container */}
+              <div
+                style={{
+                  backgroundColor: "#ffffff",
+                  borderRadius: "28px",
+                  padding: "48px 40px",
+                  border: "none",
+                  boxShadow: "0 4px 24px rgba(26, 14, 7, 0.06)",
+                }}
+              >
+                {/* Header */}
+                <div style={{ textAlign: "center", marginBottom: "40px" }}>
+                  {/* Subtitle with gold lines */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "16px",
+                      marginBottom: "14px",
+                    }}
                   >
-                    <i className="ph-bold ph-quotes" />
-                  </span>
-
-                  <div className="position-relative z-1">
-                    {/* Star Ratings */}
-                    <div className="text-warning d-flex gap-1 tw-mb-4">
-                      {Array.from({ length: review.rating }).map((_, i) => (
-                        <i key={i} className="ph-fill ph-star" />
-                      ))}
-                      {Array.from({ length: 5 - review.rating }).map((_, i) => (
-                        <i key={i} className="ph ph-star" />
-                      ))}
-                    </div>
-
-                    {/* Testimonial Description */}
-                    <p className="text-heading tw-text-lg italic tw-mb-6" style={{ lineHeight: "1.7", zIndex: 1 }}>
-                      &ldquo;{t(review.text)}&rdquo;
-                    </p>
-                  </div>
-
-                  {/* Reviewer Details */}
-                  <div className="border-top border-neutral-100 tw-pt-6 d-flex justify-content-between align-items-center position-relative z-1">
-                    <div>
-                      <h5 className="tw-text-base fw-semibold text-heading font-heading mb-1">
-                        {review.name}
-                      </h5>
-                      <span className="tw-text-xs text-neutral-500 fw-medium">
-                        {t(review.role)}
-                      </span>
-                    </div>
-                    <span className="tw-text-xs text-neutral-400 font-heading">
-                      {review.date}
+                    <span style={{ width: "32px", height: "1px", backgroundColor: GOLD }} />
+                    <span
+                      className="font-heading"
+                      style={{
+                        fontSize: "11px",
+                        letterSpacing: "0.25em",
+                        textTransform: "uppercase",
+                        color: "#1a0e07",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {subtitle[language] || subtitle.en}
                     </span>
+                    <span style={{ width: "32px", height: "1px", backgroundColor: GOLD }} />
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Write a Review Section */}
-          <div className="row justify-content-center">
-            <div className="col-xl-8 col-lg-10">
-              <div className="bg-white rounded-lg shadow-sm border border-neutral-100 tw-p-8 tw-md-12">
-                <div className="text-center tw-mb-10">
-                  <h3 className="tw-text-3xl fw-normal text-heading font-heading tw-mb-2">
-                    {t("reviews.writeTitle")}
+                  {/* Title */}
+                  <h3
+                    className="font-heading"
+                    style={{
+                      fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+                      fontWeight: 400,
+                      color: "#1a0e07",
+                      lineHeight: 1.2,
+                      margin: "0 0 10px 0",
+                    }}
+                  >
+                    {title[language] || title.en}
                   </h3>
-                  <p className="text-neutral-500">
-                    {t("reviews.writeSubtitle")}
+
+                  {/* Description */}
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      color: "#8a7065",
+                      lineHeight: 1.6,
+                      margin: 0,
+                    }}
+                  >
+                    {desc[language] || desc.en}
                   </p>
                 </div>
 
+                {/* Success State */}
                 {success ? (
-                  <div className="alert alert-success text-center font-heading tw-p-6 rounded-lg" role="alert">
-                    <i className="ph-fill ph-check-circle tw-text-3xl d-block tw-mb-3 text-success" />
-                    {t("reviews.formSuccess")}
+                  <div
+                    style={{
+                      textAlign: "center",
+                      padding: "40px 24px",
+                      backgroundColor: "rgba(200, 160, 80, 0.06)",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    {/* Checkmark Circle */}
+                    <div
+                      style={{
+                        width: "56px",
+                        height: "56px",
+                        borderRadius: "50%",
+                        backgroundColor: "rgba(200, 160, 80, 0.12)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0 auto 20px auto",
+                      }}
+                    >
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
+                    <p
+                      className="font-heading"
+                      style={{
+                        fontSize: "16px",
+                        color: "#1a0e07",
+                        fontWeight: 500,
+                        margin: 0,
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {successMsg[language] || successMsg.en}
+                    </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="row g-4">
-                    {/* Interactive Star Picker */}
-                    <div className="col-12 text-center tw-mb-4">
-                      <label className="d-block tw-text-sm fw-semibold text-neutral-600 tw-mb-3 font-heading">
-                        {t("reviews.formRating")} *
-                      </label>
-                      <div className="d-flex justify-content-center gap-2 tw-text-3xl">
+                  <form onSubmit={handleSubmit}>
+                    {/* Star Rating Picker */}
+                    <div style={{ textAlign: "center", marginBottom: "32px" }}>
+                      <p
+                        className="font-heading"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          color: "#6e584f",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.15em",
+                          marginBottom: "12px",
+                        }}
+                      >
+                        {labels.rating[language as keyof typeof labels.rating] || labels.rating.en}
+                      </p>
+                      <div style={{ display: "flex", justifyContent: "center", gap: "6px" }}>
                         {[1, 2, 3, 4, 5].map((star) => (
                           <button
                             key={star}
                             type="button"
-                            className="bg-transparent border-0 cursor-pointer text-warning transition-all hover-scale"
                             onClick={() => setRating(star)}
                             onMouseEnter={() => setHoverRating(star)}
                             onMouseLeave={() => setHoverRating(null)}
-                            style={{ outline: "none" }}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              cursor: "pointer",
+                              padding: "4px",
+                              outline: "none",
+                              transition: "transform 0.2s ease",
+                              transform: star <= (hoverRating ?? rating) ? "scale(1.15)" : "scale(1)",
+                            }}
                           >
-                            <i
-                              className={
-                                star <= (hoverRating ?? rating)
-                                  ? "ph-fill ph-star"
-                                  : "ph ph-star"
-                              }
-                            />
+                            <svg
+                              width="28"
+                              height="28"
+                              viewBox="0 0 24 24"
+                              fill={star <= (hoverRating ?? rating) ? GOLD : "#e0d5ca"}
+                              style={{ transition: "fill 0.2s ease" }}
+                            >
+                              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
                           </button>
                         ))}
                       </div>
                     </div>
 
-                    <div className="col-md-6 col-12">
-                      <div className="position-relative contact-form-field">
-                        <span className={`position-absolute top-50 translate-middle-y text-neutral-400 tw-text-xl ${
-                          dir === "rtl" ? "end-0 pe-2" : "start-0 ps-2"
-                        }`}>
-                          <i className="ph-bold ph-user" />
-                        </span>
+                    {/* Name & Email Row */}
+                    <div style={{ display: "flex", gap: "16px", marginBottom: "16px", flexWrap: "wrap" }}>
+                      <div style={{ flex: "1 1 240px" }}>
                         <input
                           type="text"
                           name="name"
-                          className={`form-control rounded-0 bg-white shadow-none border-none border-bottom border-bottom-neutral text-heading tw-h-14 focus-border-main-600 ${
-                            dir === "rtl" ? "pe-8 ps-2 text-end" : "ps-8 pe-2"
-                          }`}
-                          placeholder={`${t("reviews.formName")} *`}
+                          placeholder={labels.name[language as keyof typeof labels.name] || labels.name.en}
                           required
+                          style={inputStyle}
+                          onFocus={inputFocusHandler}
+                          onBlur={inputBlurHandler}
                         />
                       </div>
-                    </div>
-
-                    <div className="col-md-6 col-12">
-                      <div className="position-relative contact-form-field">
-                        <span className={`position-absolute top-50 translate-middle-y text-neutral-400 tw-text-xl ${
-                          dir === "rtl" ? "end-0 pe-2" : "start-0 ps-2"
-                        }`}>
-                          <i className="ph ph-envelope" />
-                        </span>
+                      <div style={{ flex: "1 1 240px" }}>
                         <input
                           type="email"
                           name="email"
-                          className={`form-control rounded-0 bg-white shadow-none border-none border-bottom border-bottom-neutral text-heading tw-h-14 focus-border-main-600 ${
-                            dir === "rtl" ? "pe-8 ps-2 text-end" : "ps-8 pe-2"
-                          }`}
-                          placeholder={`${t("reviews.formEmail")} *`}
+                          placeholder={labels.email[language as keyof typeof labels.email] || labels.email.en}
                           required
+                          style={inputStyle}
+                          onFocus={inputFocusHandler}
+                          onBlur={inputBlurHandler}
                         />
                       </div>
                     </div>
 
-                    <div className="col-12">
-                      <div className="position-relative contact-form-field">
-                        <span className={`position-absolute top-0 tw-mt-4 text-neutral-400 tw-text-xl ${
-                          dir === "rtl" ? "end-0 pe-2" : "start-0 ps-2"
-                        }`}>
-                          <i className="ph-bold ph-note-pencil" />
-                        </span>
-                        <textarea
-                          name="comment"
-                          className={`form-control rounded-0 tw-h-135-px bg-white shadow-none border-none border-bottom border-bottom-neutral text-heading focus-border-main-600 ${
-                            dir === "rtl" ? "pe-8 ps-2 text-end" : "ps-8 pe-2"
-                          }`}
-                          placeholder={`${t("reviews.formComment")} *`}
-                          required
-                        />
-                      </div>
+                    {/* Comment Textarea */}
+                    <div style={{ marginBottom: "28px" }}>
+                      <textarea
+                        name="comment"
+                        placeholder={labels.comment[language as keyof typeof labels.comment] || labels.comment.en}
+                        required
+                        rows={5}
+                        style={{
+                          ...inputStyle,
+                          resize: "vertical" as const,
+                          minHeight: "140px",
+                        }}
+                        onFocus={inputFocusHandler as any}
+                        onBlur={inputBlurHandler as any}
+                      />
                     </div>
 
-                    <div className="col-12 text-center tw-mt-8">
+                    {/* Submit Button */}
+                    <div style={{ textAlign: "center" }}>
                       <button
                         type="submit"
-                        className="btn bg-main-600 hover-bg-heading text-heading hover-text-white tw-py-5 tw-px-14 rounded-lg fw-semibold font-heading transition-all border-0 shadow-sm cursor-pointer"
+                        style={{
+                          backgroundColor: GOLD,
+                          color: "#ffffff",
+                          border: "none",
+                          borderRadius: "9999px",
+                          padding: "14px 44px",
+                          fontSize: "13px",
+                          fontWeight: 600,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
+                          cursor: "pointer",
+                          boxShadow: "0 4px 16px rgba(200, 160, 80, 0.3)",
+                          transition: "all 0.3s ease",
+                        }}
+                        className="font-heading"
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#b08c40";
+                          e.currentTarget.style.boxShadow = "0 6px 20px rgba(200, 160, 80, 0.4)";
+                          e.currentTarget.style.transform = "translateY(-2px)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = GOLD;
+                          e.currentTarget.style.boxShadow = "0 4px 16px rgba(200, 160, 80, 0.3)";
+                          e.currentTarget.style.transform = "translateY(0)";
+                        }}
                       >
-                        {t("reviews.formSubmit")}
+                        {labels.submit[language as keyof typeof labels.submit] || labels.submit.en}
                       </button>
                     </div>
                   </form>
@@ -264,10 +349,48 @@ const ReviewsPage: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* User Submitted Reviews */}
+          {userReviews.length > 0 && (
+            <div className="row justify-content-center" style={{ marginTop: "48px" }}>
+              <div className="col-xl-7 col-lg-9">
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {userReviews.map((review, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        backgroundColor: "#ffffff",
+                        borderRadius: "20px",
+                        padding: "28px",
+                        border: "none",
+                        boxShadow: "0 4px 18px rgba(26, 14, 7, 0.05)",
+                      }}
+                    >
+                      {/* Stars */}
+                      <div style={{ display: "flex", gap: "3px", marginBottom: "12px" }}>
+                        {Array.from({ length: review.rating }).map((_, i) => (
+                          <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill={GOLD}>
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                          </svg>
+                        ))}
+                      </div>
+                      {/* Text */}
+                      <p style={{ fontSize: "14px", color: "#3f342e", lineHeight: 1.7, margin: "0 0 16px 0" }}>
+                        {review.text}
+                      </p>
+                      {/* Name */}
+                      <p className="font-heading" style={{ margin: 0, fontSize: "14px", fontWeight: 600, color: "#1a0e07" }}>
+                        {review.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* FooterOne */}
       <FooterOne />
     </AOSWrap>
   );

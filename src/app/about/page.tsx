@@ -21,7 +21,7 @@ const AboutPage: React.FC = () => {
   const legacyImageRef = useRef<HTMLImageElement>(null);
   const legacyContainerRef = useRef<HTMLDivElement>(null);
   const parallaxBgRef = useRef<HTMLDivElement>(null);
-  const parallaxContainerRef = useRef<HTMLSectionElement>(null);
+  const parallaxContainerRef = useRef<HTMLElement>(null);
   const masonryContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

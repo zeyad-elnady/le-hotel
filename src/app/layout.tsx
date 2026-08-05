@@ -3,9 +3,13 @@ import RouteScrollToTop from "@/helper/RouteScrollToTop";
 import ErrorBoundary from "@/helper/ErrorBoundary";
 import CustomGSAP from "@/helper/CustomGsap";
 import HeaderOne from "@/components/HeaderOne";
-import { Marcellus, Cairo } from "next/font/google";
+import { Marcellus, Cairo, Geist } from "next/font/google";
 import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
 
 /* Marcellus – Google Font */
 const marcellus = Marcellus({
@@ -43,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${marcellus.variable} ${cairo.variable}`} suppressHydrationWarning>
+    <html lang="en" className={cn(marcellus.variable, cairo.variable, "font-sans", geist.variable)} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <LanguageProvider>
           <ErrorBoundary>

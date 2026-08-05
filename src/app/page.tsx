@@ -4,8 +4,7 @@ import AOSWrap from "@/helper/AOSWrap";
 import BannerOne from "@/components/BannerOne";
 import Checkout from "@/components/Checkout";
 import AboutOne from "@/components/AboutOne";
-import FeatureOne from "@/components/FeatureOne";
-import AdvanceArea from "@/components/AdvanceArea";
+import RoomsSection from "@/components/RoomsSection";
 import BrandOne from "@/components/BrandOne";
 import FooterOne from "@/components/FooterOne";
 
@@ -33,11 +32,8 @@ export default function Home() {
       {/* About Section */}
       <AboutOne />
 
-      {/* Feature Section (Luxury Amenities GSAP cards) */}
-      <FeatureOne />
-
-      {/* Advance Area (Stunning city locations GSAP fanning cards) */}
-      <AdvanceArea />
+      {/* Rooms Section (Expand on hover) */}
+      <RoomsSection />
 
       {/* Brand Partners (Prestige hover brand logo grid) */}
       <BrandOne />
