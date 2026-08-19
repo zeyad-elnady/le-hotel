@@ -83,33 +83,31 @@ const RoomsSection: FC = () => {
                 {desc[language]}
               </p>
 
-              {/* CTA Link */}
-              <Link href="/rooms" passHref legacyBehavior>
-                <a
-                  style={{
-                    display: "inline-block",
-                    padding: "14px 36px",
-                    border: `1px solid ${GOLD}`,
-                    color: DARK_BROWN,
-                    borderRadius: "9999px",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    textDecoration: "none",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = GOLD;
-                    e.currentTarget.style.color = "#ffffff";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = DARK_BROWN;
-                  }}
-                >
-                  {language === "ar" ? "استكشف جميع الغرف" : "Explore All Rooms"}
-                </a>
+              <Link
+                href="/rooms"
+                style={{
+                  display: "inline-block",
+                  padding: "14px 36px",
+                  border: `1px solid ${GOLD}`,
+                  color: DARK_BROWN,
+                  borderRadius: "9999px",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  textDecoration: "none",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = GOLD;
+                  e.currentTarget.style.color = "#ffffff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.color = DARK_BROWN;
+                }}
+              >
+                {language === "ar" ? "استكشف جميع الغرف" : "Explore All Rooms"}
               </Link>
             </div>
           </div>

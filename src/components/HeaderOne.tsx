@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
@@ -16,7 +16,7 @@ const HeaderOne: FC = () => {
 
   /* ── scroll listener ── */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -27,67 +27,87 @@ const HeaderOne: FC = () => {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  const DARK_BROWN = "hsl(26,25%,12%)";
   const PREMIUM_FADE = "linear-gradient(135deg, hsl(26,25%,15%) 0%, hsl(26,30%,8%) 100%)";
-  const GOLD  = "hsl(43,80%,60%)";
+  const GOLD = "hsl(43,80%,60%)";
+
+  // Do not show the public website header in the internal dashboard
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <>
       {/* ══════════════════════════════════════════
-          MAIN HEADER
+          FLOATING ULTRA-PREMIUM HEADER
       ══════════════════════════════════════════ */}
-      <header
+      <div
         dir={dir}
         style={{
           position: "fixed",
-          inset: "0 0 auto 0",
+          top: scrolled ? "12px" : "18px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "calc(100% - 32px)",
+          maxWidth: "1440px",
           zIndex: 999,
-          transition: "background 0.4s ease, box-shadow 0.4s ease, padding 0.3s ease",
-          background: scrolled
-            ? PREMIUM_FADE
-            : "transparent",
-          boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.25)" : "none",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          padding: scrolled ? "14px 0" : "24px 0",
+          transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
-        <div
+        <header
           style={{
-            maxWidth: "1440px",
-            margin: "0 auto",
-            padding: "0 40px",
+            background: "linear-gradient(180deg, rgba(28, 18, 12, 0.94) 0%, rgba(18, 11, 7, 0.96) 100%)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            borderRadius: "100px",
+            border: "1px solid rgba(200, 160, 80, 0.25)",
+            boxShadow: scrolled
+              ? "0 16px 44px rgba(0,0,0,0.5), 0 0 24px rgba(200,160,80,0.12)"
+              : "0 12px 36px rgba(0,0,0,0.4), 0 0 16px rgba(200,160,80,0.08)",
+            padding: scrolled ? "6px 28px" : "8px 36px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "32px",
+            gap: "24px",
+            minHeight: "68px",
+            transition: "all 0.35s ease",
           }}
         >
-          {/* ── Logo ── */}
+          {/* ── Logo in the middle of the corner ── */}
           <Link
             href="/"
-            style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center" }}
+            style={{
+              textDecoration: "none",
+              flexShrink: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "56px",
+              padding: "0 4px",
+            }}
             aria-label="le hotel – home"
           >
             <img
               src="/assets/images/logo/logo.png"
               alt="le hotel Logo"
               style={{
-                height: "90px",
+                height: "58px",
                 width: "auto",
+                objectFit: "contain",
                 display: "block",
-                marginTop: "-15px",
-                marginBottom: "-10px",
+                margin: "0 auto",
+                filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.3))",
+                transition: "transform 0.25s ease",
               }}
             />
           </Link>
 
           {/* ── Desktop nav ── */}
-          <nav className="d-none d-lg-flex" aria-label="Primary navigation">
+          <nav className="d-none d-lg-flex" aria-label="Primary navigation" style={{ margin: "0 auto" }}>
             <ul
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "36px",
+                gap: "30px",
                 listStyle: "none",
                 margin: 0,
                 padding: 0,
@@ -103,28 +123,34 @@ const HeaderOne: FC = () => {
                       onMouseEnter={() => setHoveredIdx(i)}
                       onMouseLeave={() => setHoveredIdx(null)}
                       style={{
-                        color: isActive ? GOLD : "#fff",
+                        color: isActive ? GOLD : "rgba(255, 255, 255, 0.9)",
                         textDecoration: "none",
-                        fontSize: "0.8rem",
-                        letterSpacing: "0.14em",
+                        fontSize: "0.82rem",
+                        letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        fontWeight: 400,
+                        fontWeight: isActive ? 600 : 400,
                         position: "relative",
-                        paddingBottom: "4px",
-                        transition: "color 0.25s",
+                        padding: "6px 0 8px 0",
+                        display: "inline-block",
+                        transition: "color 0.25s ease",
                       }}
                     >
                       {t(item.translationKey)}
-                      {/* animated underline */}
+
+                      {/* Golden active/hover underline bar matching reference */}
                       <span
                         style={{
                           position: "absolute",
-                          bottom: 0,
-                          left: 0,
-                          height: "1px",
+                          bottom: "0px",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          height: "2px",
                           background: GOLD,
-                          width: isActive || hoveredIdx === i ? "100%" : "0%",
-                          transition: "width 0.3s ease",
+                          width: isActive ? "100%" : hoveredIdx === i ? "80%" : "0%",
+                          borderRadius: "2px",
+                          transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease",
+                          opacity: isActive || hoveredIdx === i ? 1 : 0,
+                          boxShadow: isActive ? `0 0 10px ${GOLD}` : "none",
                         }}
                       />
                     </Link>
@@ -139,7 +165,7 @@ const HeaderOne: FC = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "20px",
+              gap: "16px",
               flexShrink: 0,
             }}
           >
@@ -153,24 +179,27 @@ const HeaderOne: FC = () => {
               style={{
                 alignItems: "center",
                 gap: "8px",
-                background: GOLD,
+                background: "linear-gradient(135deg, hsl(43,85%,62%) 0%, hsl(38,80%,50%) 100%)",
                 color: "#1a0e07",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                letterSpacing: "0.12em",
+                fontSize: "0.76rem",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
                 textTransform: "uppercase",
                 textDecoration: "none",
                 padding: "11px 26px",
                 borderRadius: "50px",
-                transition: "background 0.25s, transform 0.2s",
+                boxShadow: "0 4px 16px rgba(200, 160, 80, 0.35)",
+                transition: "all 0.25s ease",
                 whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.background = "#fff";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(255, 255, 255, 0.4)";
                 (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = GOLD;
+                (e.currentTarget as HTMLElement).style.background = "linear-gradient(135deg, hsl(43,85%,62%) 0%, hsl(38,80%,50%) 100%)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px rgba(200, 160, 80, 0.35)";
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
               }}
             >
@@ -183,20 +212,25 @@ const HeaderOne: FC = () => {
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
               style={{
-                background: "transparent",
-                border: "none",
-                color: "#fff",
-                fontSize: "1.6rem",
+                background: "rgba(200, 160, 80, 0.12)",
+                border: "1px solid rgba(200, 160, 80, 0.3)",
+                color: GOLD,
+                borderRadius: "50%",
+                width: "42px",
+                height: "42px",
+                fontSize: "1.4rem",
                 cursor: "pointer",
-                padding: "4px",
-                lineHeight: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s ease",
               }}
             >
               <i className="ph ph-list" />
             </button>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
 
       {/* ══════════════════════════════════════════
           MOBILE DRAWER OVERLAY
@@ -207,7 +241,8 @@ const HeaderOne: FC = () => {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.55)",
+            background: "rgba(0,0,0,0.65)",
+            backdropFilter: "blur(6px)",
             zIndex: 1097,
             animation: "fadeIn 0.25s ease",
           }}
@@ -232,6 +267,8 @@ const HeaderOne: FC = () => {
           transition: `transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0s ${mobileOpen ? "0s" : "0.35s"}`,
           overflowY: "auto",
           padding: "32px 28px 48px",
+          borderRight: dir === "rtl" ? "none" : "1px solid rgba(200,160,80,0.2)",
+          borderLeft: dir === "rtl" ? "1px solid rgba(200,160,80,0.2)" : "none",
         }}
       >
         {/* close */}
@@ -251,7 +288,7 @@ const HeaderOne: FC = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: "40px",
+            marginBottom: "32px",
             transition: "background 0.2s",
           }}
           onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.2)")}
@@ -266,20 +303,20 @@ const HeaderOne: FC = () => {
           onClick={() => setMobileOpen(false)}
           style={{
             textDecoration: "none",
-            marginBottom: "48px",
+            marginBottom: "36px",
             display: "flex",
-            alignItems: "center"
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <img
             src="/assets/images/logo/logo.png"
             alt="le hotel Logo"
             style={{
-              height: "76px",
+              height: "64px",
               width: "auto",
+              objectFit: "contain",
               display: "block",
-              marginTop: "-10px",
-              marginBottom: "-10px",
             }}
           />
         </Link>
@@ -294,13 +331,14 @@ const HeaderOne: FC = () => {
                 className="font-heading"
                 style={{
                   display: "block",
-                  padding: "18px 0",
-                  color: pathname === item.link ? GOLD : "rgba(255,255,255,0.82)",
+                  padding: "16px 0",
+                  color: pathname === item.link ? GOLD : "rgba(255,255,255,0.85)",
                   textDecoration: "none",
                   fontSize: "0.9rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   transition: "color 0.2s",
+                  fontWeight: pathname === item.link ? 600 : 400,
                 }}
               >
                 {t(item.translationKey)}
@@ -312,7 +350,7 @@ const HeaderOne: FC = () => {
         {/* bottom row */}
         <div
           style={{
-            marginTop: "40px",
+            marginTop: "32px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -326,15 +364,16 @@ const HeaderOne: FC = () => {
             onClick={() => setMobileOpen(false)}
             className="font-heading"
             style={{
-              background: GOLD,
+              background: "linear-gradient(135deg, hsl(43,85%,62%) 0%, hsl(38,80%,50%) 100%)",
               color: "#1a0e07",
               fontSize: "0.75rem",
-              fontWeight: 600,
+              fontWeight: 700,
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               textDecoration: "none",
               padding: "10px 22px",
               borderRadius: "50px",
+              boxShadow: "0 4px 14px rgba(200, 160, 80, 0.35)",
             }}
           >
             {t("header.booking")}

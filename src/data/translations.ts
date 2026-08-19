@@ -7,6 +7,7 @@ export const translations = {
   nav: {
     home: { en: "Home", ar: "الرئيسية", fr: "Accueil" },
     rooms: { en: "Rooms", ar: "الغرف", fr: "Chambres" },
+    events: { en: "Events", ar: "الفعاليات", fr: "Événements" },
     reviews: { en: "Reviews", ar: "الآراء", fr: "Avis" },
     jobs: { en: "Jobs", ar: "الوظائف", fr: "Carrières" },
     about: { en: "About Us", ar: "من نحن", fr: "À Propos" },
